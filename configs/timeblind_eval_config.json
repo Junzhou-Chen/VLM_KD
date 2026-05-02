@@ -1,0 +1,5 @@
+{
+  "eval_name": "TimeBlind",
+  "data_path": "/home/ec2-user/zhou/dataset/TimeBlind",
+  "output_path": "./"
+}
