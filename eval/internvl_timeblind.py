@@ -32,11 +32,9 @@ def load_message(video_path: str, question: str):
 
 def get_args():
     parser = argparse.ArgumentParser(description="Basic test for the TimeBlind benchmark")
-    parser.add_argument('--model_name', '-m', metavar='E', type=str, default='OpenGVLab/InternVL3-14B-hf',
-                        help='Name of test model, choose from Qwen3 VL, InterVL 3.5 serious')
-    parser.add_argument('--benchmark', '-b', metavar='E', type=str, default='/home/ec2-user/zhou/dataset/TimeBlind', help='Path of benchmark')
-    parser.add_argument('--model_path', '-mp', metavar='E', type=str, default=None, help='Path of test model')
-    parser.add_argument('--save_path', '-sp', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result')
+    parser.add_argument('--folder_path', '-m', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result/Qwen',
+                        help='Path of test json file save path')
+    parser.add_argument('--save_path', '-sp', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result/confusion_map.png')
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -57,6 +55,10 @@ if __name__ == '__main__':
         predict_answer = model.process_message(message=message, max_new_tokens=512)
         blind_qa[i]['model_output'] = predict_answer
         print(predict_answer)
+        if i % 200 == 0:
+            with open(save_name, "w", encoding="utf-8") as f:
+                for item in blind_qa:
+                    f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
     with open(save_name, "w", encoding="utf-8") as f:
         for item in blind_qa:

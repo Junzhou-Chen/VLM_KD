@@ -70,6 +70,7 @@ def get_args():
     parser.add_argument('--result_file', metavar='E', type=str, default=r'/home/ec2-user/zhou/VLM_KD/result/Qwen/Qwen3-VL-30B-A3B-Thinking_timeblind.jsonl',
                         help='Path to the result file')
     parser.add_argument('--judge_model', '-b', metavar='E', type=str, default="Qwen/Qwen3-14B", help='Judge model select.')
+    parser.add_argument('save_path')
     return parser.parse_args()
 
 def main():

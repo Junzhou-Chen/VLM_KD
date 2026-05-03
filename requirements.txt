@@ -9,3 +9,6 @@ timm==0.9.12
 huggingface_hub
 scipy
 openai
+matplotlib
+seaborn
+scikit-learn
