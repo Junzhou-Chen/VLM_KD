@@ -8,4 +8,4 @@ Pillow
 timm==0.9.12
 huggingface_hub
 scipy
-tokenizers==0.15.1
+openai
