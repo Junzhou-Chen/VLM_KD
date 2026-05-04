@@ -34,7 +34,9 @@ def get_args():
     parser = argparse.ArgumentParser(description="Basic test for the TimeBlind benchmark")
     parser.add_argument('--folder_path', '-m', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result/Qwen',
                         help='Path of test json file save path')
-    parser.add_argument('--save_path', '-sp', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result/confusion_map.png')
+    parser.add_argument('--benchmark', '-b', metavar='E', type=str, default='/home/ec2-user/zhou/dataset/TimeBlind', help='Path of benchmark')
+    parser.add_argument('--model_path', '-mp', metavar='E', type=str, default=None, help='Path of test model')
+    parser.add_argument('--save_path', '-sp', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result')
     return parser.parse_args()
 
 if __name__ == '__main__':

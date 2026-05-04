@@ -67,10 +67,10 @@ def create_extraction_prompt(model_output: str, question_type: str) -> str:
 
 def get_args():
     parser = argparse.ArgumentParser(description="Basic test for the TimeBlind benchmark")
-    parser.add_argument('--result_file', metavar='E', type=str, default=r'/home/ec2-user/zhou/VLM_KD/result/Qwen/Qwen3-VL-30B-A3B-Thinking_timeblind.jsonl',
+    parser.add_argument('--result_file', metavar='E', type=str, default=r'/home/ec2-user/zhou/VLM_KD/result/Qwen/Qwen3-VL-8B-Thinking_timeblind.jsonl',
                         help='Path to the result file')
     parser.add_argument('--judge_model', '-b', metavar='E', type=str, default="Qwen/Qwen3-14B", help='Judge model select.')
-    parser.add_argument('save_path')
+    parser.add_argument('--save_path', '-s', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result/Qwen/LLM_judge_Qwen3-VL-8B-Thinking_timeblind.jsonl')
     return parser.parse_args()
 
 def main():
@@ -86,9 +86,12 @@ def main():
         prompt = create_extraction_prompt(model_output=blind_data[i]["model_output"], question_type=blind_data[i]["type"])
         response, thinking_content = judge_model.process_message(prompt=prompt)
         blind_data[i]['predict_answer'] = response
-
-    with open(args.result_file, "w", encoding="utf-8") as f:
-        for item in args.result_file:
+        if i % 200 == 0:
+            with open(args.save_path, "w", encoding="utf-8") as f:
+                for item in blind_data:
+                    f.write(json.dumps(item, ensure_ascii=False) + "\n")
+    with open(args.save_path, "w", encoding="utf-8") as f:
+        for item in blind_data:
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
 if __name__ == '__main__':
