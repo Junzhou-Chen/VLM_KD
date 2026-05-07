@@ -1,4 +1,4 @@
-{"index": 0, "video_path": "/home/ec2-user/zhou/dataset/TimeBlind/videos/vid_00000_0.mp4", "question": "Does the boy start eating shortly after the girl puts her cup down?", "answer": "yes", "type": "yes_no", "model_output": "Yes, the boy starts eating shortly after the girl puts her cup down."}
+{"index": 0, "video_path": "/home/ec2-user/zhou/dataset/TimeBlind/videos/vid_00000_0.mp4", "question": "Does the boy start eating shortly after the girl puts her cup down?", "answer": "yes", "type": "yes_no", "model_output": "Yes"}
 {"index": 1, "video_path": "/home/ec2-user/zhou/dataset/TimeBlind/videos/vid_00000_1.mp4", "question": "Does the boy start eating shortly after the girl puts her cup down?", "answer": "no", "type": "yes_no"}
 {"index": 2, "video_path": "/home/ec2-user/zhou/dataset/TimeBlind/videos/vid_00000_0.mp4", "question": "Does the boy start eating at the same time the girl sets her cup down?", "answer": "no", "type": "yes_no"}
 {"index": 3, "video_path": "/home/ec2-user/zhou/dataset/TimeBlind/videos/vid_00000_1.mp4", "question": "Does the boy start eating at the same time the girl sets her cup down?", "answer": "yes", "type": "yes_no"}

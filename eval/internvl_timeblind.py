@@ -36,6 +36,7 @@ def get_args():
                         help='Path of test json file save path')
     parser.add_argument('--benchmark', '-b', metavar='E', type=str, default='/home/ec2-user/zhou/dataset/TimeBlind', help='Path of benchmark')
     parser.add_argument('--model_path', '-mp', metavar='E', type=str, default=None, help='Path of test model')
+    parser.add_argument('--model_name', '-mn', metavar='E', type=str, default="OpenGVLab/InternVL3_5-14B", help='Name of Model')
     parser.add_argument('--save_path', '-sp', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result')
     return parser.parse_args()
 
@@ -53,8 +54,8 @@ if __name__ == '__main__':
     for i, item in enumerate(tqdm(blind_qa, desc="Testing", total=len(blind_qa))):
         if "model_output" in blind_qa[i]:
             continue
-        message = load_message(video_path=item['video_path'], question=item['question'])
-        predict_answer = model.process_message(message=message, max_new_tokens=512)
+        # message = load_message(video_path=item['video_path'], question=item['question'])
+        predict_answer, history = model.process_video_message(prompt=item['question'], video_path=item['video_path'] , max_new_tokens=512)
         blind_qa[i]['model_output'] = predict_answer
         print(predict_answer)
         if i % 200 == 0:

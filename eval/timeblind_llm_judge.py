@@ -4,12 +4,12 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from tqdm import tqdm
 
 class Qwen3:
-    def __init__(self, model_name: str = "Qwen/Qwen3-14B"):
+    def __init__(self, model_name: str = "Qwen/Qwen3-14B", device_map: str = 'cuda'):
         self.model_name = model_name
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForCausalLM.from_pretrained(model_name,
                                                           torch_dtype="auto",
-                                                          device_map="auto",
+                                                          device_map=device_map,
                                                           )
     def process_message(self, prompt, max_new_tokens: int = 32768):
         messages = [
@@ -67,15 +67,18 @@ def create_extraction_prompt(model_output: str, question_type: str) -> str:
 
 def get_args():
     parser = argparse.ArgumentParser(description="Basic test for the TimeBlind benchmark")
-    parser.add_argument('--result_file', metavar='E', type=str, default=r'/home/ec2-user/zhou/VLM_KD/result/Qwen/Qwen3-VL-8B-Thinking_timeblind.jsonl',
+    parser.add_argument('--result_file', metavar='E', type=str, default=r'/home/ec2-user/zhou/VLM_KD/result/OpenGVLab/InternVL3_5-14B_timeblind.jsonl',
                         help='Path to the result file')
+    parser.add_argument('--device_map', metavar='E', type=str,
+                        default=r'cuda:1',
+                        help='Device map')
     parser.add_argument('--judge_model', '-b', metavar='E', type=str, default="Qwen/Qwen3-14B", help='Judge model select.')
-    parser.add_argument('--save_path', '-s', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result/Qwen/LLM_judge_Qwen3-VL-8B-Thinking_timeblind.jsonl')
+    parser.add_argument('--save_path', '-s', metavar='E', type=str, default='/home/ec2-user/zhou/VLM_KD/result/LLM_judge/LLM_judge_InternVL3_5-14B_timeblind.jsonl')
     return parser.parse_args()
 
 def main():
     args = get_args()
-    judge_model = Qwen3(model_name=args.judge_model)
+    judge_model = Qwen3(model_name=args.judge_model, device_map=args.device_map)
     with open(args.result_file, "r", encoding="utf-8") as f:
         blind_data = [json.loads(line) for line in f if line.strip()]
     for i, item in enumerate(tqdm(blind_data, desc="Testing", total=len(blind_data))):
